@@ -18,15 +18,15 @@ document.addEventListener('DOMContentLoaded', function() {
         menuOverlay.classList.remove('active');
     });
 
-    // スキャンボタンのクリックイベント
-    scanButton.addEventListener('click', () => {
-        // カメラ起動（実際のアプリではここでカメラAPIを使用）
-        setTimeout(() => {
-            // デモ用：スキャン後の結果表示
-            scanContainer.style.display = 'none';
-            resultsContainer.style.display = 'block';
-        }, 1000);
-    });
+    // // スキャンボタンのクリックイベント
+    // scanButton.addEventListener('click', () => {
+    //     // カメラ起動（実際のアプリではここでカメラAPIを使用）
+    //     setTimeout(() => {
+    //         // デモ用：スキャン後の結果表示
+    //         scanContainer.style.display = 'none';
+    //         resultsContainer.style.display = 'block';
+    //     }, 1000);
+    // });
 
     // 戻る機能（結果画面から戻る）
     document.addEventListener('keydown', (e) => {

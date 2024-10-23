@@ -47,18 +47,15 @@ body {
 }
 
 .main-content {
-    padding-top: 4rem;
-    min-height: calc(100vh - 4rem);
+    padding-top: 1rem; /* 変更: paddingを小さくして画面内に収める */
+    height: 50%; /* 全体が1画面に収まるように調整 */
+    /* overflow: hidden; スクロールを無効化 */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: #f8f8f8;
-    width: 100%; /* 追加: 幅を100%に */
+    justify-content: space-around; /* スキャンボタンなどを画面に均等に配置 */
 }
 
 .scan-container {
-    width: 100%;
     aspect-ratio: 3/4;
     background: #e0e0e0;
     display: flex;
@@ -66,7 +63,7 @@ body {
     align-items: center;
     justify-content: center;
     margin-bottom: 2rem;
-    max-width: 100%; /* 追加: 最大幅を100%に */
+    max-width: 100%;  
 }
 
 .scan-button {
@@ -84,13 +81,13 @@ body {
     margin-top: 1rem;
 }
 
-.results-container {
+/* /* .results-container {
     width: 100%;
     padding: 1rem;
-    display: none;
-}
+    display: none; 
+} */
 
-.detected-items {
+/* .detected-items {
     background: #ffe4e4;
     padding: 1rem;
     margin-bottom: 1rem;
@@ -103,11 +100,11 @@ body {
     margin: 0.5rem 0;
     border-radius: 4px;
     color: white;
-}
+} */
 
-.menu-list {
+/* .menu-list {
     list-style: none;
-    width: 100%; /* 追加: 幅を100%に */
+    width: 100%;
 }
 
 .menu-item {
@@ -116,7 +113,7 @@ body {
     margin: 0.5rem 0;
     border-radius: 4px;
     color: white;
-}
+}  */
 
 /* サイドメニュー */
 .side-menu {
