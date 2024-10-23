@@ -10,7 +10,7 @@ elements = driver.find_elements(By.XPATH, "//li[contains(@class, 'block-link fle
 links = [element.get_attribute("href") for element in elements]
 
 # リンクをテキストファイルに保存
-with open('links.txt', 'w', encoding='utf-8') as file:
+with open('kategorisc.txt', 'w', encoding='utf-8') as file:
     for link in links:
         file.write(link + '\n')
 
