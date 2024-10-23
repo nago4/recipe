@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>食材スキャナー</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <button class="menu-button">☰</button>
+            <div class="user-icon"></div>
+        </header>
+
+        <main class="main-content">
+            <div class="scan-container" id="scanFrame">
+                <div>Frame 1</div>
+                <button class="scan-button">ボタン</button>
+                <div class="scan-text">商品のスキャン</div>
+            </div>
+
+            <div class="results-container" id="resultsContainer">
+                <div class="detected-items">
+                    読み取ったメニュー
+                    トマト
+                    人参
+                    ...
+                </div>
+                <div class="menu-list">
+                    <div class="menu-item">メニュー1</div>
+                    <div class="menu-item">メニュー2</div>
+                </div>
+            </div>
+        </main>
+
+        <div class="side-menu" id="sideMenu">
+            <!-- サイドメニューの内容 -->
+        </div>
+        <div class="menu-overlay" id="menuOverlay"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
