@@ -4,14 +4,14 @@ import time
 import json
 
 driver = webdriver.Chrome()  # ブラウザの起動
-driver.get('https://cookpad.com/jp/categories/10')
+driver.get('https://cookpad.com/jp/categories/1502')
 
 # 特定のXPathを持つ<a>タグのhref属性とテキストを取得
 elements = driver.find_elements(By.XPATH, '//*[@id="category-recipe-list"]/li/div/div/div/h2/a')
 recipes = [(element.get_attribute("href"), element.text) for element in elements]
 
 # リンク、料理名、材料リストをテキストファイルに保存
-with open('yasainookazu.txt', 'w', encoding='utf-8') as file:
+with open('sonota.txt', 'w', encoding='utf-8') as file:
     for i, (link, name) in enumerate(recipes, start=1):
         # 各レシピの材料リストを取得
         try:
