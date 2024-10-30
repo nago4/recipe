@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>食材スキャンレシピ</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>食材スキャンレシピ</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">ホーム</a></li>
+                    <li><a href="#">レシピ一覧</a></li>
+                    <li><a href="#">お気に入り</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <main>
+            <div class="scan-section">
+                <div class="scan-container">
+                    <input type="file" id="camera-input" accept="image/*" capture="camera" class="hidden">
+                    <label for="camera-input" class="scan-button">
+                        <span class="camera-icon">📸</span>
+                        <span>食材をスキャン</span>
+                    </label>
+                    <p class="scan-description">食材を撮影して、おすすめのレシピを見つけましょう</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
