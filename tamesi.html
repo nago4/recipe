@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>食材検索</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .results {
+            margin-top: 20px;
+        }
+        .recipe {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>食材検索</h1>
+        <input type="text" id="ingredient" placeholder="食材を入力してください">
+        <button onclick="searchRecipes()">検索</button>
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        function searchRecipes() {
+            const ingredient = document.getElementById('ingredient').value;
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = ''; // 前の検索結果をクリア
+
+            if (ingredient) {
+                fetch(`material/${ingredient}.txt`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('ファイルが見つかりません');
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        const recipes = data.trim().split('\n');
+                        recipes.forEach(recipe => {
+                            const div = document.createElement('div');
+                            div.className = 'recipe';
+
+                            // リンクと料理名を分離
+                            const [name, link] = recipe.split(': ');
+                            const a = document.createElement('a');
+                            a.href = link;
+                            a.textContent = name;
+                            a.target = '_blank'; // 新しいタブで開く
+                            div.appendChild(a);
+
+                            resultsDiv.appendChild(div);
+                        });
+                    })
+                    .catch(error => {
+                        const div = document.createElement('div');
+                        div.className = 'recipe';
+                        div.textContent = error.message;
+                        resultsDiv.appendChild(div);
+                    });
+            }
+        }
+    </script>
+</body>
+</html>
