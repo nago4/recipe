@@ -41,14 +41,18 @@
         <h1>食材検索</h1>
         <input type="text" id="ingredient" placeholder="食材を入力してください">
         <button onclick="searchRecipes()">検索</button>
+        <button onclick="sortRecipesByName()">名前でソート</button>
         <div class="results" id="results"></div>
     </div>
 
     <script>
+        let currentRecipes = [];
+
         function searchRecipes() {
             const ingredient = document.getElementById('ingredient').value;
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = ''; // 前の検索結果をクリア
+            currentRecipes = []; // 現在のレシピをクリア
 
             if (ingredient) {
                 fetch(`material/${ingredient}.txt`)
@@ -61,19 +65,10 @@
                     .then(data => {
                         const recipes = data.trim().split('\n');
                         recipes.forEach(recipe => {
-                            const div = document.createElement('div');
-                            div.className = 'recipe';
-
-                            // リンクと料理名を分離
                             const [name, link] = recipe.split(': ');
-                            const a = document.createElement('a');
-                            a.href = link;
-                            a.textContent = name;
-                            a.target = '_blank'; // 新しいタブで開く
-                            div.appendChild(a);
-
-                            resultsDiv.appendChild(div);
+                            currentRecipes.push({ name, link });
                         });
+                        displayRecipes(currentRecipes);
                     })
                     .catch(error => {
                         const div = document.createElement('div');
@@ -82,6 +77,29 @@
                         resultsDiv.appendChild(div);
                     });
             }
+        }
+
+        function displayRecipes(recipes) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = ''; // 前の検索結果をクリア
+
+            recipes.forEach(recipe => {
+                const div = document.createElement('div');
+                div.className = 'recipe';
+
+                const a = document.createElement('a');
+                a.href = recipe.link;
+                a.textContent = recipe.name;
+                a.target = '_blank'; // 新しいタブで開く
+                div.appendChild(a);
+
+                resultsDiv.appendChild(div);
+            });
+        }
+
+        function sortRecipesByName() {
+            currentRecipes.sort((a, b) => a.name.localeCompare(b.name));
+            displayRecipes(currentRecipes);
         }
     </script>
 </body>
