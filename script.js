@@ -1,58 +1,123 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const cameraInput = document.getElementById('camera-input');
-    const scanButton = document.querySelector('.scan-button');
+let currentRecipes = [];
 
-    // カメラ入力の処理
-    cameraInput.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            // ここで撮影された画像を処理
-            handleImage(file);
-        }
-    });
+// レシピを検索する関数
+function searchRecipes() {
+    const ingredient = document.getElementById('ingredient').value.trim();
+    const resultsDiv = document.getElementById('results');
+    
+    // 入力値の検証
+    if (!ingredient) {
+        showMessage('食材を入力してください', 'error');
+        return;
+    }
 
-    // スキャンボタンのアニメーション効果
-    scanButton.addEventListener('mousedown', function() {
-        this.style.transform = 'scale(0.98)';
-    });
+    // 検索結果をクリア
+    clearResults();
 
-    scanButton.addEventListener('mouseup', function() {
-        this.style.transform = 'scale(1)';
-    });
+    // ローディング表示
+    showLoading();
 
-    // タッチデバイス用のイベント
-    scanButton.addEventListener('touchstart', function() {
-        this.style.transform = 'scale(0.98)';
-    });
-
-    scanButton.addEventListener('touchend', function() {
-        this.style.transform = 'scale(1)';
-    });
-
-    // 画像処理関数（ここではダミー関数として実装）
-    function handleImage(file) {
-        // 実際のPython処理との連携部分
-        console.log('画像が選択されました:', file.name);
-        
-        // ここで画像をサーバーに送信する処理を実装
-        // 例: FormDataを使用してサーバーにアップロード
-        const formData = new FormData();
-        formData.append('image', file);
-
-        // 実際のアップロード処理（コメントアウト）
-        /*
-        fetch('/api/scan', {
-            method: 'POST',
-            body: formData
+    fetch(`material/${ingredient}.txt`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('該当するレシピが見つかりませんでした');
+            }
+            return response.text();
         })
-        .then(response => response.json())
         .then(data => {
-            // レシピ提案の処理
-            console.log('レシピデータ:', data);
+            const recipes = data.trim().split('\n');
+            currentRecipes = recipes.map(recipe => {
+                const [name, link] = recipe.split(': ');
+                return { name, link };
+            });
+            displayRecipes(currentRecipes);
         })
         .catch(error => {
-            console.error('エラー:', error);
+            showMessage(error.message, 'error');
+        })
+        .finally(() => {
+            hideLoading();
         });
-        */
+}
+
+// レシピを表示する関数
+function displayRecipes(recipes) {
+    const resultsDiv = document.getElementById('results');
+    clearResults();
+
+    if (recipes.length === 0) {
+        showMessage('レシピが見つかりませんでした', 'info');
+        return;
     }
+
+    recipes.forEach(recipe => {
+        const div = document.createElement('div');
+        div.className = 'recipe';
+
+        const a = document.createElement('a');
+        a.href = recipe.link;
+        a.textContent = recipe.name;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer'; // セキュリティ対策
+
+        div.appendChild(a);
+        resultsDiv.appendChild(div);
+    });
+}
+
+// 名前でソートする関数
+function sortRecipesByName() {
+    if (currentRecipes.length === 0) {
+        showMessage('ソートするレシピがありません', 'info');
+        return;
+    }
+
+    currentRecipes.sort((a, b) => a.name.localeCompare(b.name, 'ja'));
+    displayRecipes(currentRecipes);
+}
+
+// メッセージを表示する関数
+function showMessage(message, type = 'info') {
+    const resultsDiv = document.getElementById('results');
+    clearResults();
+
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message message-${type}`;
+    messageDiv.textContent = message;
+    resultsDiv.appendChild(messageDiv);
+}
+
+// 検索結果をクリアする関数
+function clearResults() {
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = '';
+}
+
+// ローディング表示を追加する関数
+function showLoading() {
+    const resultsDiv = document.getElementById('results');
+    const loadingDiv = document.createElement('div');
+    loadingDiv.className = 'loading';
+    loadingDiv.textContent = '検索中...';
+    resultsDiv.appendChild(loadingDiv);
+}
+
+// ローディング表示を削除する関数
+function hideLoading() {
+    const loadingDiv = document.querySelector('.loading');
+    if (loadingDiv) {
+        loadingDiv.remove();
+    }
+}
+
+// 入力フィールドでEnterキーを押したときの処理
+document.getElementById('ingredient').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        searchRecipes();
+    }
+});
+
+// ページ読み込み時にフォーカスを設定
+window.addEventListener('load', () => {
+    document.getElementById('ingredient').focus();
 });
