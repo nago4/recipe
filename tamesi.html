@@ -41,7 +41,6 @@
         <h1>食材検索</h1>
         <input type="text" id="ingredient" placeholder="食材を入力してください">
         <button onclick="searchRecipes()">検索</button>
-        <button onclick="sortRecipesByName()">名前でソート</button>
         <div class="results" id="results"></div>
     </div>
 
@@ -95,12 +94,7 @@
 
                 resultsDiv.appendChild(div);
             });
-        }
-
-        function sortRecipesByName() {
-            currentRecipes.sort((a, b) => a.name.localeCompare(b.name));
-            displayRecipes(currentRecipes);
-        }
+}
     </script>
 </body>
 </html>
