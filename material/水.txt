@@ -5,3 +5,5 @@ The GRAND アルトバイエルンとブロッコリーのほっこりスープ:
 鶏だんごの豚汁風: https://nago4.github.io/manyrecipe/伊藤ハム/鶏だんごの豚汁風/11.html
 焼豚入り冷や汁: https://nago4.github.io/manyrecipe/伊藤ハム/焼豚入り冷や汁/14.html
 なんちゃって親子丼: https://nago4.github.io/manyrecipe/味の素/なんちゃって親子丼/1.html
+かぼちゃの煮物(基本のおかずつゆ使用): https://nago4.github.io/manyrecipe/キッコーマン/かぼちゃの煮物(基本のおかずつゆ使用)/4.html
+ブロッコリーの洋風蒸し煮【食物繊維が摂れるサプリ副菜】: https://nago4.github.io/manyrecipe/キッコーマン/ブロッコリーの洋風蒸し煮【食物繊維が摂れるサプリ副菜】/5.html
