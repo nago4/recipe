@@ -121,3 +121,39 @@ document.getElementById('ingredient').addEventListener('keypress', function(e) {
 window.addEventListener('load', () => {
     document.getElementById('ingredient').focus();
 });
+
+const ingredient = document.getElementById('ingredient').value;
+
+// 在庫管理機能
+function searchRecipes() {
+    fetch(`https://localhost/8000/index.html=${ingredient}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const resultsList = document.getElementById('results-list');
+            resultsList.innerHTML = ''; // 既存の結果をクリア
+
+            data.recipes.forEach(recipe => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${recipe.name}: ${recipe.link}`;
+                resultsList.appendChild(listItem);
+            });
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+}
+
+// 在庫に食材を追加する関数
+function addToStock() {
+    if (ingredient) {
+        const stockList = document.getElementById('stock-list');
+        const listItem = document.createElement('li');
+        listItem.textContent = ingredient;
+        stockList.appendChild(listItem);
+    }
+}
