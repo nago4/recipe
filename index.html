@@ -21,22 +21,37 @@
                     class="search-input"
                 >
                 <div class="button-group">
+                    <button class="btn btn-secondary" onclick="addToStock()">
+                        <span class="btn-icon">📷</span>食材の写真をとる
+                    </button>
                     <button class="btn btn-primary" onclick="searchRecipes()">
                         <span class="btn-icon">🔍</span>検索
                     </button>
                     <button class="btn btn-secondary" onclick="sortRecipesByName()">
                         <span class="btn-icon">↕️</span>名前でソート
                     </button>
+                    <button class="btn btn-secondary" onclick="addToStock()">
+                        <span class="btn-icon">➕</span>在庫に追加
+                    </button>
                 </div>
             </div>
 
             <div class="results" id="results">
-                <!-- 検索結果がここに表示されます -->
+                <ul id="results-list">
+                    <!-- 検索結果がここに表示されます -->
+                </ul>
+            </div>
+
+            <div class="stock" id="stock">
+                <h2>在庫リスト</h2>
+                <ul id="stock-list">
+                    <!-- 在庫リストがここに表示されます -->
+                </ul>
             </div>
         </main>
 
         <footer class="footer">
-            <p>© 2024 食材検索アプリ</p>
+            <p>© 2025 食材検索アプリ</p>
         </footer>
     </div>
     <script src="script.js"></script>

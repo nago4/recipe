@@ -121,3 +121,108 @@ document.getElementById('ingredient').addEventListener('keypress', function(e) {
 window.addEventListener('load', () => {
     document.getElementById('ingredient').focus();
 });
+
+// const ingredient = document.getElementById('ingredient').value;
+
+function addToStock() {
+    const ingredient = document.getElementById('ingredient').value;
+    if (ingredient) {
+        const stockList = document.getElementById('stock-list');
+        const listItem = document.createElement('li');
+        listItem.textContent = ingredient;
+        stockList.appendChild(listItem);
+
+        // POSTリクエストを送信
+        fetch('http://localhost:8000', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ingredient: ingredient })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+    }
+}
+
+// 入力フィールドでEnterキーを押したときの処理
+document.getElementById('ingredient').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        searchRecipes();
+    }
+});
+
+// ページ読み込み時にフォーカスを設定
+window.addEventListener('load', () => {
+    document.getElementById('ingredient').focus();
+});
+
+const ingredient = document.getElementById('ingredient').value;
+
+// 在庫管理機能
+function searchRecipes() {
+    const apiUrl = `http://localhost:8000/${ingredient}.txt`; // ローカルサーバーのURLを使用
+
+    fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text(); // テキストファイルを読み込む
+        })
+        .then(data => {
+            const resultsList = document.getElementById('results-list');
+            resultsList.innerHTML = ''; // 既存の結果をクリア
+
+            const listItem = document.createElement('li');
+            listItem.textContent = data;
+            resultsList.appendChild(listItem);
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+}
+
+// 在庫管理機能
+// function searchRecipes() {
+//     fetch(`https://localhost/8000/index.html=${ingredient}`)
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error('Network response was not ok');
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             const resultsList = document.getElementById('results-list');
+//             resultsList.innerHTML = ''; // 既存の結果をクリア
+
+//             data.recipes.forEach(recipe => {
+//                 const listItem = document.createElement('li');
+//                 listItem.textContent = `${recipe.name}: ${recipe.link}`;
+//                 resultsList.appendChild(listItem);
+//             });
+//         })
+//         .catch(error => {
+//             console.error('There has been a problem with your fetch operation:', error);
+//         });
+// }
+
+// // 在庫に食材を追加する関数
+// function addToStock() {
+//     if (ingredient) {
+//         const stockList = document.getElementById('stock-list');
+//         const listItem = document.createElement('li');
+//         listItem.textContent = ingredient;
+//         stockList.appendChild(listItem);
+//     }
+// }
